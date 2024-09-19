@@ -32,7 +32,7 @@ std::once_flag TRTObjectProvider::runtime_flag_;
 nvinfer1::IBuilder* TRTObjectProvider::mbuilder_ = nullptr;
 nvinfer1::IRuntime* TRTObjectProvider::mruntime_ = nullptr;
 
-TRTLogger TRTObjectProvider::get_trt_logger() {
+TRTLogger& TRTObjectProvider::get_trt_logger() {
     return mlogger_;
 }
 

@@ -50,7 +50,7 @@ class TRTObjectProvider {
     static std::once_flag runtime_flag_;
 public:
 
-    static TRTLogger get_trt_logger();
+    static TRTLogger& get_trt_logger();
 
     static nvinfer1::IBuilder* get_trt_builder();
 
