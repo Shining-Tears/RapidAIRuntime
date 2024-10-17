@@ -13,6 +13,12 @@
 
 #include "utility.h"
 
+#ifdef _WIN32
+#define EXPORT __declspec(dllexport)
+#else
+#define EXPORT
+#endif
+
 namespace TRTBackend {
 
 enum class EnginePrecision {
@@ -57,7 +63,7 @@ public:
     static nvinfer1::IRuntime* get_trt_runtime();
 };
 
-class TRTEngine {
+class EXPORT TRTEngine {
 
     nvinfer1::ICudaEngine* mengine_ = nullptr;
     nvinfer1::IBuilderConfig* mconfig_ = nullptr;
@@ -67,7 +73,6 @@ class TRTEngine {
     nvinfer1::IHostMemory* mengine_data_ = nullptr;
     TRTObjectProvider mprovider_;
 
-    ~TRTEngine() noexcept;
     void init_members(std::string& onnx_path);
     void build_engine(EnginePrecision& engine_precision, Optimizationlevel& optimize_level);
 public:
@@ -86,5 +91,7 @@ public:
     Optimizationlevel optimize_level, std::vector<EngineDynamicShape> dynamic_shapes);
 
     void save_engine(std::string save_path);
+    
+    ~TRTEngine() noexcept;
 };
 }

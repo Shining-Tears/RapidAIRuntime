@@ -116,7 +116,7 @@ void TRTEngine::init_members(std::string& onnx_path) {
     mprofile_ = mbuilder->createOptimizationProfile(); 
 
     // 2GB
-    mconfig_->setMaxWorkspaceSize(1 << 31);
+    mconfig_->setMaxWorkspaceSize(1 << 30);
     std::vector<unsigned char> onnx_data = load_file(onnx_path);
     mparser_->parse(onnx_data.data(), onnx_data.size());
 }
