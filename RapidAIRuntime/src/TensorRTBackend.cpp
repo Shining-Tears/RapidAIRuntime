@@ -135,6 +135,12 @@ void TRTEngine::build_engine(EnginePrecision& engine_precision, Optimizationleve
             mconfig_->setFlag(nvinfer1::BuilderFlag::kFP16);
             mconfig_->setFlag(nvinfer1::BuilderFlag::kINT8);
 
+            // 删除最后一个默认策略源，消除部分模型量化过程找不到策略源错误（例如yolov5-seg)
+            mconfig_->setTacticSources(1U << static_cast<uint32_t>(nvinfer1::TacticSource::kCUBLAS)
+                | 1U << static_cast<uint32_t>(nvinfer1::TacticSource::kCUBLAS_LT)
+                | 1U << static_cast<uint32_t>(nvinfer1::TacticSource::kCUDNN)
+                | 1U << static_cast<uint32_t>(nvinfer1::TacticSource::kEDGE_MASK_CONVOLUTIONS));
+
             // TODO Calibrator
             break;
         default:
